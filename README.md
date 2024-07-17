@@ -7,15 +7,15 @@ El objetivo de este proyecto es realizar un análisis detallado de la base de da
 
 ## Objetivo Principal
 
-- **Analizar y visualizar la satisfacción con la vida y otros indicadores sociodemográficos en diferentes países europeos utilizando datos de la Encuesta Social Europea (ESS).**
+- Analizar y visualizar la satisfacción con la vida y otros indicadores sociodemográficos en diferentes países europeos utilizando datos de la Encuesta Social Europea (ESS).
 
 ## Objetivos Específicos
 
-1. **Depurar y preparar la base de datos de la ESS para análisis posteriores.**
-2. **Explorar y analizar la relación entre la satisfacción con la vida y variables sociodemográficas como edad, género, nivel educativo y estado civil.**
-3. **Implementar visualizaciones interactivas mediante dashboards para facilitar la interpretación de los datos.**
-4. **Generar informes técnicos detallados que resuman los principales hallazgos utilizando RMarkdown.**
-5. **Crear presentaciones efectivas que comuniquen los resultados del análisis utilizando RMarkdown y Shiny.**
+1. Depurar y preparar la base de datos de la ESS para análisis posteriores.
+2. Explorar y analizar la relación entre la satisfacción con la vida y variables sociodemográficas como edad, género, nivel educativo y estado civil.
+3. Implementar visualizaciones interactivas mediante dashboards para facilitar la interpretación de los datos.
+4. Generar informes técnicos detallados que resuman los principales hallazgos utilizando RMarkdown.
+5. Crear presentaciones efectivas que comuniquen los resultados del análisis utilizando RMarkdown y Shiny.
 
 
 ## Estructura del Repositorio
