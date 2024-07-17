@@ -1,0 +1,216 @@
+---
+title: "Archivo RMD_ Modulo 8"
+author: "Ana Dos Santos"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    number_sections: true
+    toc_float: FALSE
+---
+
+
+## Configuración del documento
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 8)
+knitr::opts_knit$set(root.dir = normalizePath(".."))
+```
+
+
+## Instalación si se requiere y carga de paquetes
+
+```{r}
+# Función para instalar paquetes si no están instalados
+install_if_required <- function(packages) {
+  new_packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+  if(length(new_packages)) install.packages(new_packages, repos = "http://cran.us.r-project.org")
+  lapply(packages, library, character.only = TRUE)
+}
+
+# Lista de paquetes necesarios
+packages <- c("flexdashboard", "ggplot2", "dplyr", "readr", "shiny", "leaflet", "countrycode", "sf", "tidyverse", "knitr", "kableExtra", "lorem", "xtable")         
+
+# Instalar y cargar los paquetes necesarios
+install_if_required(packages)
+
+```
+
+
+## Carga de BBDD 
+
+```{r}
+
+# Definir la ruta al archivo CSV depurado
+file_path <- "data/ESS9e03_2-ESS10-subset_depurada.csv"
+
+
+# Cargar la base de datos depurada
+  data <- read_csv(file_path)
+
+# Mostrar las primeras filas del dataframe para verificar
+head(data)
+
+```
+
+
+## Gráficos Satisfacción y Felicidad
+
+Se van a generar los siguientes gráficos:
+1. Distribución de la Felicidad
+2. Distribución de la Satisfacción con la vida
+3. Distribución de la Salud Subjetiva
+
+**Distribución de la Felicidad**
+
+```{r}
+ggplot(data, aes(x = `Nivel de felicidad`)) +
+  geom_bar(fill = "blue") +
+  labs(title = "Distribución de la Felicidad",
+       x = "Nivel de Felicidad",
+       y = "Frecuencia")
+```
+
+
+**Distribución de la Satisfacción con la vida**
+
+```{r}
+ggplot(data, aes(x = `Satisfacción con la vida`)) +
+  geom_boxplot(fill = "green") +
+  labs(title = "Distribución de la Satisfacción con la Vida",
+       x = "Satisfacción con la Vida",
+       y = "Frecuencia")
+```
+
+
+**Distribución de la Salud Subjetiva**
+
+```{r}
+ggplot(data, aes(x = `Salud subjetiva`)) +
+  geom_bar(fill = "purple") +
+  labs(title = "Distribución de la Salud Subjetiva",
+       x = "Salud Subjetiva",
+       y = "Frecuencia")
+```
+
+
+
+## Gráficos Impacto de Factores Socioeconómicos
+
+Se van a generar los siguientes gráficos:
+1. Satisfacción con la Economía vs Satisfacción con la vida
+2. Estado Civil y Satisfacción con la vida
+3. Relación Laboral y Satisfacción con la vida
+
+**Satisfacción con la Economía vs Satisfacción con la vida**
+
+```{r}
+ggplot(data, aes(x = `Satisfacción con la economía`, y = `Satisfacción con la vida`)) +
+  geom_point(color = "red") +
+  labs(title = "Satisfacción con la Economía vs Satisfacción con la Vida",
+       x = "Satisfacción con la Economía",
+       y = "Satisfacción con la Vida")
+```
+
+
+**Estado Civil y Satisfacción con la vida**
+
+```{r}
+ggplot(data, aes(x = `Estado civil (Texto)`, y = `Satisfacción con la vida`, fill = `Estado civil (Texto)`)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Estado Civil y Satisfacción con la Vida",
+       x = "Estado Civil",
+       y = "Satisfacción con la Vida")
+```
+
+
+**Relación Laboral y Satisfacción con la vida**
+
+```{r}
+ggplot(data, aes(x = `Relación laboral (Texto)`, y = `Satisfacción con la vida`, fill = `Relación laboral (Texto)`)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Relación Laboral y Satisfacción con la Vida",
+       x = "Relación Laboral",
+       y = "Satisfacción con la Vida")
+```
+
+
+
+
+## Gráficos de análisis Geográfico y de Uso de Internet
+
+Se van a generar los siguientes gráficos:
+1. Tiempo de uso de Internet vs nivel de felicidad
+2. Mapa ??
+
+
+**Tiempo de uso de Internet vs nivel de felicidad**
+
+```{r}
+ggplot(data, aes(x = `Tiempo de uso de Internet`, y = `Nivel de felicidad`)) +
+  geom_point(color = "orange") +
+  labs(title = "Tiempo de Uso de Internet vs Nivel de Felicidad",
+       x = "Tiempo de Uso de Internet (minutos)",
+       y = "Nivel de Felicidad")
+```
+
+
+
+
+## Gráficos para analizar la felicidad por Género y Educación
+
+Se van a generar los siguientes gráficos:
+1. Satisfacción con la vida por Género
+2. Número de Encuestados por Grupo Educativo
+3. Relación entre Nivel Educativo y satisfacción con la vida
+
+
+**Satisfacción con la vida por Género**
+
+```{r}
+ggplot(data, aes(x = Género, y = `Satisfacción con la vida`, fill = Género)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Satisfacción con la Vida por Género",
+       x = "Género",
+       y = "Satisfacción con la Vida")
+```
+
+
+**Número de Encuestados por Grupo Educativo**
+
+```{r}
+ggplot(data, aes(x = `Nivel más alto de educación`, fill = `Nivel más alto de educación`)) +
+  geom_bar() +
+  labs(title = "Número de Encuestados por Grupo Educativo",
+       x = "Grupo Educativo",
+       y = "Número de Encuestados")
+```
+
+
+**Relación entre Nivel Educativo y satisfacción con la vida**
+
+```{r}
+# Convertimos las variables a factores
+data$`Nivel más alto de educación` <- as.factor(data$`Nivel más alto de educación`)
+data$`Satisfacción con la vida` <- as.factor(data$`Satisfacción con la vida`)
+
+
+ggplot(data, aes(x = `Nivel más alto de educación`, y = `Satisfacción con la vida`, fill = `Nivel más alto de educación`)) +
+  geom_tile() +
+  labs(title = "Relación entre Nivel Educativo y Satisfacción con la Vida",
+       x = "Nivel Educativo",
+       y = "Satisfacción con la Vida")
+```
+
+
+
+
+## Tabla de resultados
+
+
+
+
+
+## Referencias bibliográficas
+
+
